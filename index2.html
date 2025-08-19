@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Путешествие: Зеленогорск – Приморск – Выборг</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background: #f9f9f9;
+    }
+    header {
+      background: url('zelenogorsk.jpg') center/cover no-repeat;
+      color: white;
+      text-align: center;
+      padding: 4rem 1rem;
+    }
+    header h1 {
+      font-size: 2.5rem;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
+    }
+    nav {
+      background: #2c3e50;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 1rem;
+      display: block;
+    }
+    nav a:hover {
+      background: #34495e;
+    }
+    section {
+      padding: 2rem 1rem;
+      max-width: 1100px;
+      margin: auto;
+    }
+    section h2 {
+      margin-bottom: 1rem;
+      font-size: 1.8rem;
+      text-align: center;
+      color: #2c3e50;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .card {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      overflow: hidden;
+      transition: transform 0.2s;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+    }
+    .card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+    .card p {
+      padding: 1rem;
+    }
+    footer {
+      text-align: center;
+      background: #2c3e50;
+      color: white;
+      padding: 1rem;
+      margin-top: 2rem;
+    }
+    /* Адаптивность */
+    header h1 {
+      font-size: clamp(1.5rem, 6vw, 2.5rem);
+    }
+    section h2 {
+      font-size: clamp(1.3rem, 5vw, 1.8rem);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Путешествие: Зеленогорск – Приморск – Выборг</h1>
+  </header>
+
+  <nav>
+    <a href="#zelenogorsk">Зеленогорск</a>
+    <a href="#primorsk">Приморск</a>
+    <a href="#vyborg">Выборг</a>
+    <a href="#contacts">Контакты</a>
+  </nav>
+
+  <section id="zelenogorsk">
+    <h2>Зеленогорск</h2>
+    <div class="grid">
+      <div class="card">
+        <img src="zelenogorsk.jpg" alt="Зеленогорск">
+        <p>Курортный город на берегу Финского залива, известный своими пляжами и сосновыми лесами.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="primorsk">
+    <h2>Приморск</h2>
+    <div class="grid">
+      <div class="card">
+        <img src="primorsk.jpg" alt="Приморск">
+        <p>Приморск — уютный городок с маяками и красивыми видами на залив.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="vyborg">
+    <h2>Выборг</h2>
+    <div class="grid">
+      <div class="card">
+        <img src="vyborg.jpg" alt="Выборг">
+        <p>Исторический город с замком и старинной архитектурой в скандинавском стиле.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contacts">
+    <h2>Контакты</h2>
+    <p style="text-align:center">Для сотрудничества и туров: <a href="mailto:info@travel.ru">info@travel.ru</a></p>
+  </section>
+
+  <footer>
+    <p>© 2025 Путешествия по маршруту Зеленогорск – Приморск – Выборг</p>
+  </footer>
+</body>
+</html>

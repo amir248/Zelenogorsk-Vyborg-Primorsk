@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Маршрут Зеленогорск — Приморск — Выборг | Сайт‑визитка путешествия</title>
+  <meta name="description" content="Одностраничный лендинг о маршруте Зеленогорск — Приморск — Выборг: достопримечательности, логистика, карта, примеры туров и контакты." />
+  <meta name="keywords" content="Зеленогорск, Приморск, Выборг, путешествие, маршрут, Ленинградская область, Финский залив, туры" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Маршрут Зеленогорск — Приморск — Выборг" />
+  <meta property="og:description" content="Сайт‑визитка маршрута: что посмотреть, как добраться, карта и удобные ссылки." />
+  <meta property="og:image" content="https://picsum.photos/1200/630?random=42" />
+  <meta property="og:locale" content="ru_RU" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🧭</text></svg>">
+
+  <!-- Leaflet (карта) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+  <style>
+    :root {
+      --bg: #0b1020;
+      --card: #111735;
+      --muted: #9ab0d6;
+      --text: #eaf2ff;
+      --accent: #7bdcb5;
+      --accent-2: #a0c1ff;
+      --ring: rgba(123, 220, 181, 0.35);
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color: var(--text); background: radial-gradient(1200px 600px at 70% -10%, #172148 0%, #0b1020 55%);
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; /* display: block; */ }
+
+    .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+    header { position: sticky; top: 0; backdrop-filter: saturate(140%) blur(8px); background: rgba(11,16,32,0.6); border-bottom: 1px solid rgba(255,255,255,0.08); z-index: 40; }
+    .nav { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; letter-spacing: .3px; }
+    .brand .logo { width: 36px; height: 36px; display:grid; place-items:center; border-radius: 12px; background: linear-gradient(135deg, var(--accent), var(--accent-2)); box-shadow: 0 10px 30px var(--ring); }
+    .nav a { opacity: .9; }
+    .nav-links { display: none; gap: 18px; }
+    .nav-links a { padding: 8px 12px; border-radius: 10px; transition: .2s ease; }
+    .nav-links a:hover { background: rgba(255,255,255,0.08); }
+    .menu { display: inline-flex; width: 40px; height: 40px; border-radius: 10px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08); align-items: center; justify-content: center; }
+
+    @media (min-width: 860px) { .nav-links { display: flex } .menu { display: none } }
+
+    .hero { position: relative; padding: 80px 0 50px; overflow: hidden; }
+    .hero .grid { display: grid; gap: 30px; align-items: center; grid-template-columns: 1fr; }
+    @media (min-width: 980px){ .hero .grid { grid-template-columns: 1.05fr .95fr; } }
+
+    .headline { font-size: clamp(28px, 4vw, 52px); line-height: 1.05; letter-spacing: -.5px; margin: 0 0 10px; }
+    .sub { color: var(--muted); font-size: clamp(16px, 2vw, 18px); max-width: 60ch; }
+    .cta { margin-top: 24px; display: flex; gap: 14px; flex-wrap: wrap; }
+    .btn { padding: 12px 18px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.14); background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02)); color: var(--text); font-weight: 600; box-shadow: 0 10px 30px rgba(0,0,0,.25); }
+    .btn.primary { background: linear-gradient(135deg, var(--accent), var(--accent-2)); border: none; color: #041227; box-shadow: 0 10px 30px var(--ring); }
+
+    .stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-top: 24px; }
+    .stat { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 12px 14px; }
+    .stat b { display: block; font-size: 18px; }
+    .stat span { color: var(--muted); font-size: 13px; }
+
+    .card { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08); border-radius: 18px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,.25); }
+    section { padding: 70px 0; }
+    section h2 { font-size: clamp(24px, 3vw, 34px); margin: 0 0 18px; }
+    section p.lead { color: var(--muted); max-width: 70ch; }
+
+    .features { display: grid; gap: 18px; grid-template-columns: 1fr; }
+    @media (min-width: 860px){ .features { grid-template-columns: repeat(3,1fr); } }
+    .feature { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 18px; }
+    .feature h3 { margin: 0 0 6px; font-size: 18px; }
+    .feature p { margin: 0; color: var(--muted); }
+
+    .grid-2 { display: grid; gap: 18px; grid-template-columns: 1fr; }
+    @media (min-width: 980px){ .grid-2 { grid-template-columns: 1.2fr .8fr; } }
+
+    .city { display: grid; gap: 16px; grid-template-columns: 1fr; }
+    .city h3 { margin: 0; font-size: 20px; }
+    .city ul { margin: 8px 0 0 18px; color: var(--muted); }
+
+    .cards { display: grid; gap: 16px; grid-template-columns: 1fr; }
+    @media (min-width: 860px){ .cards { grid-template-columns: repeat(3, 1fr); } }
+
+    .gallery { display: grid; gap: 10px; grid-template-columns: repeat(6, 1fr); }
+    .gallery img { width: 100%; height: 110px; object-fit: cover; border-radius: 12px; }
+    @media (max-width: 600px){ .gallery { grid-template-columns: repeat(3,1fr); } }
+
+    #map { width: 100%; height: 420px; border-radius: 18px; overflow: hidden; }
+
+    .footer { padding: 30px 0 60px; color: var(--muted); font-size: 14px; }
+    .footer a { color: var(--text); text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <a href="#top" class="brand" aria-label="На главную">
+        <span class="logo">🧭</span>
+        <span>Зеленогорск — Приморск — Выборг</span>
+      </a>
+      <nav>
+        <button class="menu" id="menuBtn" aria-label="Открыть меню">☰</button>
+        <div class="nav-links" id="navLinks">
+          <a href="#about">О маршруте</a>
+          <a href="#cities">Города</a>
+          <a href="#mapwrap">Карта</a>
+          <a href="#logistics">Логистика</a>
+          <a href="#tours">Туры</a>
+          <a href="#contact">Контакты</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container grid">
+        <div>
+          <h1 class="headline">Маршрут по Королевской дороге: <br>Зеленогорск — Приморск — Выборг</h1>
+          <p class="sub">Сайт‑визитка путешествия по северному побережью Финского залива: песчаные пляжи, скалистые береговые линии, северный модерн и средневековый романтизм.</p>
+          <div class="cta">
+            <a class="btn primary" href="#contact">Заказать такой лендинг</a>
+            <a class="btn" href="#mapwrap">Смотреть на карте</a>
+          </div>
+          <div class="stats">
+            <div class="stat"><b>~140 км</b><span>протяжённость</span></div>
+            <div class="stat"><b>1 день</b><span>типовой тур</span></div>
+            <div class="stat"><b>круглый год</b><span>лучший сезон</span></div>
+          </div>
+        </div>
+        <div>
+          <div class="card">
+            <img alt="Пейзаж Финского залива" src="photo-1505761671935-60b3a7427bad.avif?q=80&w=1600&auto=format&fit=crop" width="1600" height="1000" loading="eager" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container">
+        <h2>О маршруте</h2>
+        <p class="lead">Небольшое путешествие из прибрежного курортного Зеленогорска через атмосферный Приморск к средневековому Выборгу. Удобная логистика от Санкт‑Петербурга: электрички, автобусы, туры выходного дня.</p>
+        <div class="features">
+          <div class="feature">
+            <h3>Природа</h3>
+            <p>Побережье Финского залива, сосновые боры, гранитные скалы и закаты на набережных.</p>
+          </div>
+          <div class="feature">
+            <h3>Архитектура</h3>
+            <p>Северный модерн, деревянные дачи начала XX века, лютеранские кирхи и средневековый замок.</p>
+          </div>
+          <div class="feature">
+            <h3>История</h3>
+            <p>Маршрут частично повторяет историческую Королевскую дорогу, соединяющую столицу со шведскими и финскими владениями.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="cities">
+      <div class="container grid-2">
+        <div>
+          <div class="city card" style="padding:18px">
+            <h3>Зеленогорск</h3>
+            <p class="lead">Курортная атмосфера, широкие пляжи и прогулки по хвойным аллеям.</p>
+            <ul>
+              <li>Набережная и пляж</li>
+              <li>Церковь Казанской иконы Божией Матери</li>
+              <li>Дачная архитектура начала XX века</li>
+            </ul>
+          </div>
+          <div class="city card" style="padding:18px">
+            <h3>Приморск</h3>
+            <p class="lead">Каменистые берега и строгая красота Северной кирхи.</p>
+            <ul>
+              <li>Кирха св. Марии Магдалины</li>
+              <li>Смотровые площадки на залив</li>
+              <li>Старые рыбацкие кварталы</li>
+            </ul>
+          </div>
+          <div class="city card" style="padding:18px">
+            <h3>Выборг</h3>
+            <p class="lead">Средневековый замок, брусчатка Старого города и романтика парка Монрепо.</p>
+            <ul>
+              <li>Выборгский замок и башня Святого Олафа</li>
+              <li>Парк Монрепо</li>
+              <li>Библиотека Алвара Аалто</li>
+            </ul>
+          </div>
+        </div>
+        <div>
+          <div class="card">
+            <img alt="Выборгский замок" src="https://images.unsplash.com/photo-1523731407965-2430cd12f5e4?q=80&w=1600&auto=format&fit=crop" width="1600" height="1000" loading="lazy" />
+          </div>
+          <div style="height:10px"></div>
+          <!-- <div class="card">
+            <img alt="Побережье и скалы" src="photo-1523731407965-2430cd12f5e4.avif?q=80&w=1600&auto=format&fit=crop" width="1600" height="1000" loading="lazy" />
+          </div> -->
+        </div>
+      </div>
+    </section>
+
+    <section id="mapwrap">
+      <div class="container">
+        <h2>Карта маршрута</h2>
+        <p class="lead">Маршрут и ключевые точки остановок. Масштаб можно менять, метки кликабельные.</p>
+        <div id="map" class="card" role="application" aria-label="Интерактивная карта с маршрутом Зеленогорск — Приморск — Выборг"></div>
+      </div>
+    </section>
+
+    <section id="logistics">
+      <div class="container">
+        <h2>Логистика и время в пути</h2>
+        <div class="cards">
+          <div class="feature">
+            <h3>Из Санкт‑Петербурга</h3>
+            <p>Электричкой до Зеленогорска (Финляндский вокзал) или автобусом от м. «Беговая». Далее — по маршруту.</p>
+          </div>
+          <div class="feature">
+            <h3>Между городами</h3>
+            <p>Автобусы/маршрутки и авто (~40–60 мин между соседними точками). Возможны экскурсионные туры одним днём.</p>
+          </div>
+          <div class="feature">
+            <h3>Советы</h3>
+            <p>Лучшее время старта — утром. Возьмите ветровку, обувь для каменистых берегов и термос для чаепития на природе.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="tours">
+      <div class="container">
+        <h2>Примеры туров</h2>
+        <p class="lead">Подборки однодневных экскурсий и частных гидов. Кнопки можно привязать к вашим партнёрским ссылкам.</p>
+        <div class="cards">
+          <div class="card" style="padding:18px">
+            <h3>Однодневный обзорный</h3>
+            <p>Зеленогорск → Приморск → Выборг, 10–12 часов, 2–3 остановки с прогулками.</p>
+            <a class="btn" href="#" aria-label="Открыть подробности обзорного тура">Подробнее</a>
+          </div>
+          <div class="card" style="padding:18px">
+            <h3>Исторический и архитектурный</h3>
+            <p>Акцент на кирхи, дачную архитектуру и библиотеку Алвара Аалто.</p>
+            <a class="btn" href="#" aria-label="Открыть подробности исторического тура">Подробнее</a>
+          </div>
+          <div class="card" style="padding:18px">
+            <h3>Природные локации</h3>
+            <p>Скалы, видовые точки, закаты на набережной и пикник у залива.</p>
+            <a class="btn" href="#" aria-label="Открыть подробности природного тура">Подробнее</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <h2>Галерея вдохновения</h2>
+        <div class="gallery" aria-label="Фотогалерея">
+          <img src="photo-1441974231531-c6227db76b6e.avif?q=80&auto=format&fit=crop&w=800&h=600" alt="Сосновый бор у побережья" loading="lazy">
+          <img src="photo-1482192505345-5655af888cc4.avif?q=80&auto=format&fit=crop&w=800&h=600" alt="Каменные берега и море" loading="lazy">
+          <img src="photo-1469474968028-56623f02e42e.avif?q=80&auto=format&fit=crop&w=800&h=600" alt="Закат над водой" loading="lazy">
+          <img src="photo-1519681393784-d120267933ba.avif?q=80&auto=format&fit=crop&w=800&h=600" alt="Архитектурные детали" loading="lazy">
+          <!-- <img src="https://images.unsplash.com/photo-1521296797181-ecf3f4801cf6?q=80&auto=format&fit=crop&w=800&h=600" alt="Улица старого города" loading="lazy">
+          <img src="https://images.unsplash.com/photo-1526481280698-8fcc13fd1d70?q=80&auto=format&fit=crop&w=800&h=600" alt="Замок и башня" loading="lazy"> -->
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container card" style="padding:24px; text-align:center">
+        <h2>Нужен сайт‑визитка?</h2>
+        <p class="lead">Соберу аккуратный лендинг под ваш маршрут или тур за 1–2 дня: контент, SEO, карта, адаптив.</p>
+        <div class="cta" style="justify-content:center">
+          <a class="btn primary" href="https://wa.me/+79528885656" target="_blank" rel="noopener">Whatsapp</a>
+          <a class="btn primary" href="http://qucu.ru" target="_blank" rel="noopener">Link to site</a>
+          <a class="btn" href="mailto:chikchicly@gmail.com">Написать на почту</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      © <span id="y"></span> · Лендинг о маршруте «Зеленогорск — Приморск — Выборг». Сделано фрилансером · <a href="http://qucu.ru" target="_blank" rel="noopener">qucu.ru</a>
+    </div>
+  </footer>
+
+  <!-- JSON‑LD: описание туристического маршрута -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TouristTrip",
+    "name": "Маршрут Зеленогорск — Приморск — Выборг",
+    "description": "Сайт‑визитка путешествия по северному побережью Финского залива: Зеленогорск, Приморск, Выборг.",
+    "touristType": "Экскурсии выходного дня",
+    "itinerary": {
+      "@type": "ItemList",
+      "itemListElement": [
+        {"@type": "Place", "name": "Зеленогорск"},
+        {"@type": "Place", "name": "Приморск"},
+        {"@type": "Place", "name": "Выборг"}
+      ]
+    }
+  }
+  </script>
+
+  <script>
+    // Текущий год в подвале
+    document.getElementById('y').textContent = new Date().getFullYear();
+
+    // Мобильное меню
+    const menuBtn = document.getElementById('menuBtn');
+    const navLinks = document.getElementById('navLinks');
+    menuBtn?.addEventListener('click', () => {
+      const visible = getComputedStyle(navLinks).display !== 'none';
+      navLinks.style.display = visible ? 'none' : 'flex';
+    });
+
+    // Карта Leaflet
+    const map = L.map('map', { scrollWheelZoom: false });
+    const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 18,
+      attribution: '&copy; OpenStreetMap'
+    }).addTo(map);
+
+    // Примерные координаты (можно уточнить при желании)
+    const pts = [
+      { name: 'Зеленогорск', coords: [60.199, 29.703] },
+      { name: 'Приморск', coords: [60.367, 28.612] },
+      { name: 'Выборг', coords: [60.712, 28.750] }
+    ];
+
+    const markers = pts.map(p => L.marker(p.coords).bindPopup(`<b>${p.name}</b>`).addTo(map));
+    const latlngs = pts.map(p => p.coords);
+    const line = L.polyline(latlngs, { color: '#7bdcb5', weight: 4, opacity: .9 }).addTo(map);
+    const group = new L.featureGroup(markers.concat(line));
+    map.fitBounds(group.getBounds().pad(0.2));
+  </script>
+</body>
+</html>
